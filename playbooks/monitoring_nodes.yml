@@ -1,0 +1,43 @@
+---
+- name: Install Node Exporter
+  hosts: monitor
+  become: true
+  roles:
+#    - geerlingguy.node_exporter
+
+- name: Install PushGateway
+  hosts: monitor
+  become: true
+  roles:
+#    - openssl
+#    - prometheus.prometheus.node_exporter
+    - prometheus.prometheus.systemd_exporter
+    - prometheus.prometheus.blackbox_exporter
+    - prometheus.prometheus.smokeping_exporter
+    - prometheus.prometheus.pushgateway
+#  vars:
+#    pushgateway_tls_server_config:
+#      cert_file: /etc/pushgateway/tls.cert
+#      key_file: /etc/pushgateway/tls.key
+#    pushgateway_basic_auth_users:
+#      randomuser: P@ssw0rd
+
+- name: Install AlertManager
+  hosts: monitor
+  become: true
+  roles:
+    - prometheus.prometheus.alertmanager
+  vars:
+    alertmanager_version: latest
+    alertmanager_slack_api_url: "https://mandirisekcoid.webhook.office.com/webhookb2/6448c77f-2cd9-4291-9a56-5432cd50b358@d3dc75f5-a4ce-4c65-9734-a8430d86f5ac/IncomingWebhook/6d81b5379e734f7e85acfd4a4f4adb00/20bf927f-f7c9-4187-8327-8d74a31de49b"
+    alertmanager_receivers:
+      - name: msteams
+        slack_configs:
+          - send_resolved: true
+            channel: 'General'
+    alertmanager_route:
+      group_by: ['alertname', 'cluster', 'service']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 3h
+      receiver: msteams

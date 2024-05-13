@@ -1,0 +1,10 @@
+---
+collections:
+  - name: grafana.grafana
+  - name: prometheus.prometheus
+  - name: community.general
+
+roles:
+  - src: geerlingguy.ntp
+  - src: geerlingguy.docker
+  - src: geerlingguy.node_exporter

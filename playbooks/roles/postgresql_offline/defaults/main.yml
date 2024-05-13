@@ -1,0 +1,29 @@
+---
+# defaults file for postgresql_offline
+postgresql_version: 16
+
+postgresql_os: EL-9-x86_64
+postgresql_repo_filename:  "pgdg-redhat-repo-latest.noarch.rpm"
+postgresql_repo_url:  "https://download.postgresql.org/pub/repos/yum/reporpms/{{ postgresql_os }}/{{ postgresql_repo_filename }}"
+
+# The path to the downloaded PostgreSQL Yum Repository RPM package on your CentOS 9 server
+pgdg_redhat_repo_rpm_src: /path/to/pgdg-redhat-repo-latest.noarch.rpm
+
+# The destination path on the Red Hat 9 server where the RPM package will be copied to
+pgdg_redhat_repo_rpm_dest: /tmp/pgdg-redhat-repo-latest.noarch.rpm
+
+# The command to disable the built-in PostgreSQL module
+disable_postgresql_module_cmd: dnf -qy module disable postgresql
+
+# The path to the downloaded PostgreSQL server and client packages on your CentOS 9 server
+postgresql_server_rpm_src: "/path/to/postgresql{{ postgresql_version }}-server*.rpm"
+
+# The destination path on the Red Hat 9 server where the server and client packages will be copied to
+postgresql_server_rpm_dest: "/tmp/postgresql{{ postgresql_version }}-server*.rpm"
+
+# The command to initialize the PostgreSQL database
+initdb_cmd: "/usr/pgsql-16/bin/postgresql-{{ postgresql_version }}-setup initdb"
+
+# The name of the PostgreSQL service
+postgresql_service_name: "postgresql-{{ postgresql_version }}"
+

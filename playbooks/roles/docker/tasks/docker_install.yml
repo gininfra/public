@@ -1,0 +1,19 @@
+---
+- name: Install RPM files
+  yum:
+    name: "{{ docker_rpm_dir_remote }}/{{ item }}"
+    state: present
+  with_items:
+    - "{{ docker_compose_filename }}"
+    - "{{ docker_ce_cli_filename }}"
+    - "{{ docker_ce_filename }}"
+  register: docker_install_output
+
+- name: Start service
+  systemd:
+    name: "{{ docker_service }}"
+    state: started
+    enabled: yes
+  when: docker_install_output.changed
+
+- meta: end_play

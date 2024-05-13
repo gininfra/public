@@ -1,0 +1,4 @@
+---
+- import_tasks: local_installer.yml
+
+- import_tasks: install_remote.yml

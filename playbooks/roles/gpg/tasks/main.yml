@@ -1,0 +1,16 @@
+# roles/gpg/tasks/main.yml
+
+- name: Download Docker GPG key
+  get_url:
+    url: "{{ gpg_key_link }}"
+    dest: "{{ gpg_key_local }}"
+  delegate_to: localhost
+
+- name: Transfer GPG key to the target server
+  copy:
+    src: "{{ gpg_key_local }}"
+    dest: "{{ gpg_key_dest }}"
+
+- name: Add GPG key on the target server
+  command: "{{ gpg_rpm_import_command }}"
+
