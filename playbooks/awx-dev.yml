@@ -1,0 +1,13 @@
+---
+- name: Deploy AWX
+  hosts: awx_dev
+  gather_facts: true
+  become: true
+  roles:
+#  - geerlingguy.ntp
+  - docker
+  - awx
+  vars:
+    ntp_timezone: Asia/Jakarta
+    docker_yum_gpg_key: "{{ gpg_key_dest }}"
+

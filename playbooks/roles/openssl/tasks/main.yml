@@ -1,0 +1,43 @@
+---
+# tasks file for openssl
+
+- name: Install packages
+  package:
+    name: "{{ openssl_packages }}"
+    state: latest
+
+- name: Install required python libraries
+  pip:
+    name: "{{ openssl_pip_libraries }}"
+    state: present
+    executable: "{{ openssl_pip }}"
+
+- name: Install required python libraries
+  pip:
+    name: "{{ openssl_pip_libraries }}"
+    state: present
+    executable: "{{ openssl_pip }}"
+  delegate_to: localhost
+
+- name: Create pushgateway dir
+  file:
+    path: "{{ openssl_pushgateway_dir }}"
+    state: directory
+    owner: root
+    group: root
+
+- name: Generate a private key
+  openssl_privatekey:
+    path: "{{ openssl_key_path }}"
+
+- name: Generate a CSR
+  openssl_csr:
+    path: "{{ openssl_csr_path }}"
+    privatekey_path: "{{ openssl_key_path }}"
+
+- name: Create cert and key
+  openssl_certificate:
+    path: "{{ openssl_cert_path }}"
+    csr_path: "{{ openssl_csr_path }}"
+    privatekey_path: "{{ openssl_key_path }}"
+    provider: "{{ openssl_provider }}"

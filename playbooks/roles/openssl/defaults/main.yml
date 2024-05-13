@@ -1,0 +1,15 @@
+---
+# defaults file for openssl
+
+openssl_packages:
+  - python3-pip
+openssl_pip_libraries:
+  - cryptography
+  - passlib[bcrypt]
+  - prometheus-client
+openssl_pip: pip3
+openssl_cert_path: /etc/pushgateway/tls.cert
+openssl_csr_path: /etc/pushgateway/tls.csr
+openssl_key_path: /etc/pushgateway/tls.key
+openssl_pushgateway_dir: /etc/pushgateway
+openssl_provider: selfsigned

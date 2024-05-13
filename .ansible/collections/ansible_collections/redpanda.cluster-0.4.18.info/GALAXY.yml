@@ -1,0 +1,8 @@
+download_url: https://galaxy.ansible.com/api/v3/plugin/ansible/content/published/collections/artifacts/redpanda-cluster-0.4.18.tar.gz
+format_version: 1.0.0
+name: cluster
+namespace: redpanda
+server: https://galaxy.ansible.com/api/
+signatures: []
+version: 0.4.18
+version_url: /api/v3/plugin/ansible/content/published/collections/index/redpanda/cluster/versions/0.4.18/

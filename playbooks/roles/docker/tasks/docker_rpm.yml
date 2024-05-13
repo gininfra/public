@@ -1,0 +1,20 @@
+---
+- name: Download RPM files for {{ docker_kernel }}
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ docker_rpm_dir_localhost }}"
+  delegate_to: localhost
+  with_items:
+    - "{{ docker_compose_url }}"
+    - "{{ docker_ce_cli_url }}"
+    - "{{ docker_ce_url }}"
+
+- name: Transfer RPM files
+  copy:
+    src: "{{ docker_rpm_dir_localhost }}/{{ item }}"
+    dest: "{{ docker_rpm_dir_remote }}"
+  delegate_to: localhost
+  with_items:
+    - "{{ docker_compose_filename }}"
+    - "{{ docker_ce_cli_filename }}"
+    - "{{ docker_ce_filename }}"

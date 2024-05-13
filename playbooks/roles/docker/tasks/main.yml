@@ -1,0 +1,6 @@
+---
+- import_tasks: docker_kernel.yml
+
+- import_tasks: docker_rpm.yml
+
+- import_tasks: docker_install.yml

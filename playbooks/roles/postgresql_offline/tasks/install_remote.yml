@@ -1,0 +1,54 @@
+---
+# tasks file for postgresql_offline
+
+- name: Transfer PostgreSQL Yum Repository RPM package
+  copy:
+    src: "{{ pgdg_redhat_repo_rpm_src }}"
+    dest: "{{ pgdg_redhat_repo_rpm_dest }}"
+
+- name: Install PostgreSQL Yum Repository package
+  yum:
+    name: "{{ pgdg_redhat_repo_rpm_dest }}"
+    state: present
+
+- name: Disable the built-in PostgreSQL module
+  command: "{{ disable_postgresql_module_cmd }}"
+
+- name: Transfer PostgreSQL server and client packages
+  copy:
+    src: "{{ postgresql_server_rpm_src }}"
+    dest: "{{ postgresql_server_rpm_dest }}"
+
+- name: Install PostgreSQL server and client packages
+  yum:
+    name: "{{ postgresql_server_rpm_dest }}"
+    state: present
+
+- name: Initialize the PostgreSQL database
+  command: "{{ initdb_cmd }}"
+
+- name: Start the PostgreSQL service
+  systemd:
+    name: "{{ postgresql_service_name }}"
+    state: started
+    enabled: yes
+
+- name: Check if the service is up and running
+  command: "systemctl status {{ postgresql_service_name }}"
+  register: service_status
+  changed_when: false
+
+- name: Print service status
+  debug:
+    var: service_status.stdout_lines
+
+- name: Check if the service is enabled
+  command: "systemctl is-enabled {{ postgresql_service_name }}"
+  register: service_enabled
+  changed_when: false
+
+- name: Print service enabled status
+  debug:
+    var: service_enabled.stdout
+
+

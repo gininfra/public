@@ -1,0 +1,8 @@
+---
+- name: Run uname -r command
+  shell: uname -r
+  register: docker_kernel_release_output
+
+- name: Extract the kernel release
+  set_fact:
+    docker_kernel: "{{ docker_kernel_release_output.stdout.split('.')[-2].split('_')[0] }}"

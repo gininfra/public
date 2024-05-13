@@ -1,0 +1,19 @@
+---
+# defaults/main.yml
+
+docker_rpm_url: https://download.docker.com/linux/rhel/9/source/stable/Packages/
+docker_rpm_src: "/path/to/docker.rpm"
+docker_rpm_dest: "/tmp/docker.rpm"
+docker_rpm_dir_localhost: /tmp
+docker_rpm_dir_remote: /tmp
+docker_compose_src: "/path/to/docker-compose"
+docker_compose_dest: "/usr/local/bin/docker-compose"
+docker_service: docker
+docker_ce_version: 25.0.3-1
+docker_compose_version: 2.24.5-1
+docker_ce_filename: "docker-ce-{{ docker_ce_version }}.{{ docker_kernel }}.src.rpm"
+docker_ce_cli_filename: "docker-ce-cli-{{ docker_ce_version }}.{{ docker_kernel }}.src.rpm"
+docker_compose_filename: "docker-compose-plugin-{{ docker_compose_version }}.{{ docker_kernel }}.src.rpm"
+docker_ce_url: "{{ docker_rpm_url }}{{ docker_ce_filename }}"
+docker_ce_cli_url: "{{ docker_rpm_url }}{{ docker_ce_cli_filename }}"
+docker_compose_url: "{{ docker_rpm_url }}{{ docker_compose_filename }}"

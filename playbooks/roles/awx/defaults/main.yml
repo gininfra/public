@@ -1,0 +1,17 @@
+# roles/awx/defaults/main.yml
+
+# AWX Paths and Variables
+awx_git_repo: https://github.com/ansible/awx.git
+awx_dest_path: /opt/awx
+awx_compose_src: /opt/awx/installer/docker-compose.yml
+awx_compose_dest: /opt/awx/docker-compose.yml
+awx_inventory_dest: /opt/awx/installer/inventory
+awx_docker_compose_chdir: /opt/awx/installer
+
+# Docker Compose environment variables
+awx_compose_env:
+  - host_port: 80
+  - pg_password: mysecretpassword
+  - awx_official: true
+  - project_data_dir: /var/lib/awx/projects
+

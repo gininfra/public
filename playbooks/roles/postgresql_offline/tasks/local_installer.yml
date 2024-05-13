@@ -1,0 +1,8 @@
+---
+- name: Install PostgreSQL repository
+  dnf:
+    name: "{{ postgresql_repo_url }}"
+    state: present
+  delegate_to: localhost
+
+- meta: end_play

@@ -1,0 +1,6 @@
+# roles/gpg/defaults/main.yml
+
+gpg_key_link: https://download.docker.com/linux/centos/gpg
+gpg_key_local: /tmp/gpg_key
+gpg_key_dest: /tmp/gpg_key
+gpg_rpm_import_command: "rpm --import {{ gpg_key_dest }}"

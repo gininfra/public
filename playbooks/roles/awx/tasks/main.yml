@@ -1,0 +1,25 @@
+# roles/awx/tasks/main.yml
+
+- name: Clone AWX repository
+  git:
+    repo: "{{ awx_git_repo }}"
+    dest: "{{ awx_dest_path }}"
+  delegate_to: localhost
+
+- name: Copy Docker Compose file to the AWX directory
+  copy:
+    src: "{{ awx_compose_src }}"
+    dest: "{{ awx_compose_dest }}"
+
+- name: Set Docker Compose environment variables
+  lineinfile:
+    dest: "{{ awx_inventory_dest }}"
+    line: "{{ item.key }}={{ item.value }}"
+    insertafter: EOF
+  with_items: "{{ awx_compose_env }}"
+
+- name: Start AWX services using Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: "{{ awx_docker_compose_chdir }}"
+
